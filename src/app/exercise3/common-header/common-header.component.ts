@@ -1,16 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-common-header',
-  template: '<div>{{ currentDate | date: "medium" }}</div>',
+  template: '<p>{{ currentDateTime | date: "short" }}</p>',
   styleUrls: ['./common-header.component.css']
 })
-export class CommonHeaderComponent {
-  currentDate: Date = new Date();
+export class CommonHeaderComponent implements OnInit, OnDestroy {
+  currentDateTime: Date = new Date();
+  private timerInterval: any;
 
-  constructor() {
-    setInterval(() => {
-      this.currentDate = new Date();
+  ngOnInit() {
+    this.startInterval();
+  }
+
+  ngOnDestroy() {
+    this.stopInterval();
+  }
+
+  private startInterval() {
+    this.timerInterval = setInterval(() => {
+      this.currentDateTime = new Date();
     }, 1000);
+  }
+
+  private stopInterval() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 }
