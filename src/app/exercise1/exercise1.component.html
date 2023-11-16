@@ -1,0 +1,44 @@
+<div>
+
+    <div class="bg-info bg-opacity-25 text-center m-5 p-4">
+        <div [style.font-family]="selectedFont" [style.font-size.px]="fontSize" [style.text-align]="alignment">
+            Hello {{ userName }}!
+        </div>
+    </div>
+
+    <div class="bg-info bg-opacity-25 text-center m-5 p-4">
+        <div class="m-3">
+            <label class="me-3" for="userNameInput">Enter Name:</label>
+            <input id="userNameInput" type="text" [(ngModel)]="userName" (input)="updateUserName(userName)" />
+        </div>
+
+    
+        <div class="m-3">
+            <label class="me-3" for="fontSelector">Choose Font:</label>
+            <select id="fontSelector" [(ngModel)]="selectedFont">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+            </select>
+        </div>
+    
+        <div class="m-3">
+            <label class="me-3" for="fontSizeInput">Choose Font Size:</label>
+            <input id="fontSizeInput" type="number" [(ngModel)]="fontSize" />
+        </div>
+    
+        <div class="m-3">
+            <label  class="mb-2">Choose Alignment:</label>
+            <div>
+                <input class="me-1" type="radio" id="leftAlignment" [(ngModel)]="alignment" value="left" name="alignment" />
+                <label class="me-3" for="leftAlignment">Left</label>
+        
+                <input class="me-1" type="radio" id="centerAlignment" [(ngModel)]="alignment" value="center" name="alignment" />
+                <label class="me-3" for="centerAlignment">Center</label>
+        
+                <input class="me-1" type="radio" id="rightAlignment" [(ngModel)]="alignment" value="right" name="alignment" />
+                <label class="me-3" for="rightAlignment">Right</label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="bg-success bg-opacity-25 text-center m-5 p-4">
+
+    <div class="m-5">
+        <input class="me-3" type="number" id="num1" [(ngModel)]="num1" />
+
+        <select class="me-3" id="operation" [(ngModel)]="selectedOperation">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+
+        <input class="me-5" type="number" id="num2" [(ngModel)]="num2" />
+
+        <button (click)="calculate()">Calculate</button>
+    </div>
+
+    <div>
+        <label>Result:</label>
+        <div>{{ result }}</div>
+    </div>
+
+    <div class="m-3">
+        <label class="m-3">History:</label>
+        <div class="m-3 p-4 border border-success border-2" *ngFor="let entry of history; let i = index">
+            <div>
+                <strong>Time:</strong> {{ entry.timestamp }}
+            </div>
+            <div>
+                <strong>Operation:</strong> {{ entry.operation }}
+            </div>
+            <div class="mb-3">
+                <strong>Result:</strong> {{ entry.result }}
+            </div>
+            <button (click)="removeFromHistory(i)">Remove</button>
+        </div>
+    </div>
+</div>
