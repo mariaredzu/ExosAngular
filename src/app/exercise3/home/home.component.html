@@ -1,9 +1,9 @@
-<div class="bg-warning bg-opacity-25 text-center m-5 p-4 d-flex justify-content-center">
-    <div>
-      <select id="selector" [(ngModel)]="selectedValue">
-        <option value="">All</option>
-        <option *ngFor="let item of transactions" [value]="item.id.toString()">{{ item.id }}</option>
-      </select>
+<div *ngIf="!showTransactionDetailComponent" class="bg-warning bg-opacity-25 text-center m-5 p-4 d-flex justify-content-center">
+  <div>
+    <select id="selector" [(ngModel)]="selectedValue">
+      <option value="">All</option>
+      <option *ngFor="let item of transactions" [value]="item.id.toString()">{{ item.id }}</option>
+    </select>
     </div>
     <table>
       <thead>
@@ -14,8 +14,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let transaction of filterTable()">
-          <td class="p-3"><a [routerLink]="['/transaction', transaction.id]">{{ transaction.id }}</a></td>
+        <tr *ngFor="let transaction of filterTable()" (click)="showTransactionDetail(transaction.id)">
+          <td class="p-3">{{ transaction.id }}</td>
           <td class="p-3">{{ transaction.date }}</td>
           <td class="p-3">{{ transaction.amount }}</td>
         </tr>
