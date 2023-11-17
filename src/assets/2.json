@@ -1,8 +1,0 @@
-{
-    "id": 2,
-    "type" : "Fruit",
-    "object" : "Mango",
-    "amount": 200.0,
-    "total" : 605,
-    "date": "2023-11-14T10:30:00"
-}

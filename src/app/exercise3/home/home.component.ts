@@ -14,15 +14,19 @@ import { TransactionService } from '../transaction.service';
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Amount</th>
-          </tr>
+          <th (click)="sortTable('id')" [class.sorted]="sortColumn === 'id'">ID<span *ngIf="sortColumn === 'id'" class="arrow">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span></th>
+          <th (click)="sortTable('date')" [class.sorted]="sortColumn === 'date'">Date <span *ngIf="sortColumn === 'date'" class="arrow">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span></th>
+          <th (click)="sortTable('balance')" [class.sorted]="sortColumn === 'balance'">Balance <span *ngIf="sortColumn === 'balance'" class="arrow">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span></th>
+          <th (click)="sortTable('label')" [class.sorted]="sortColumn === 'label'">Label<span *ngIf="sortColumn === 'label'" class="arrow">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span></th>
+          <th (click)="sortTable('amount')" [class.sorted]="sortColumn === 'amount'">Amount<span *ngIf="sortColumn === 'amount'" class="arrow">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span></th>  
+        </tr>
     </thead>
     <tbody>
       <tr *ngFor="let transaction of filterTable()">
           <td class="p-3"><a [routerLink]="['/transaction', transaction.id]">{{ transaction.id }}</a></td>
           <td class="p-3">{{ transaction.date }}</td>
+          <td class="p-3">{{ transaction.balance }}</td>
+          <td class="p-3">{{ transaction.label }}</td>
           <td class="p-3">{{ transaction.amount }}</td>
         </tr>
       </tbody>
@@ -32,8 +36,11 @@ import { TransactionService } from '../transaction.service';
 })
 export class HomeComponent implements OnInit {
   transactions: any[] = [];
+  transactionIds: string[] = [];
   selectedValue: string = '';
-
+  filteredTransactions: any[] = [];
+  sortColumn: string = '';
+  sortDirection: string = 'asc';
 
   constructor(private transactionService: TransactionService) {}
 
@@ -49,5 +56,36 @@ export class HomeComponent implements OnInit {
     } else {
     return this.transactions.filter(trans => trans.id.toString() === this.selectedValue);
     }
+  }
+
+  sortTable(column: string): void {
+    if (this.sortColumn === column) {
+
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+  
+    this.transactions = this.sortTransactions([...this.transactions]);
+  }
+
+  sortTransactions(transactions: any[]): any[] {
+    if (this.sortColumn) {
+      transactions.sort((a, b) => {
+        const aValue = a[this.sortColumn];
+        const bValue = b[this.sortColumn];
+  
+        if (aValue < bValue) {
+          return this.sortDirection === 'asc' ? -1 : 1;
+        } else if (aValue > bValue) {
+          return this.sortDirection === 'asc' ? 1 : -1;
+        }
+  
+        return 0;
+      });
+    }
+  return transactions;
   }
 }
