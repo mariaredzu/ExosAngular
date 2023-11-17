@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionDetailService {
   constructor(private http: HttpClient) {}
 
-  getTransactionDetail(id: number): Observable<any> {
-    return this.http.get<any>(`assets/${id}.json`);
+  getTransactionDetail(id: string): Observable<any> {
+    return this.http.get<any>(`/assets/${id}.json`);
   }
 }

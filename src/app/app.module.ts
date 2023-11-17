@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
@@ -13,6 +12,7 @@ import { HomeComponent } from './exercise3/home/home.component';
 import { TransactionDetailComponent } from './exercise3/transaction-detail/transaction-detail.component';
 import { CommonHeaderComponent } from './exercise3/common-header/common-header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,9 +26,12 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent },
+      { path: 'transaction/:id', component: TransactionDetailComponent }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

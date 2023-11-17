@@ -4,8 +4,18 @@ import { TransactionDetailService } from '../transaction-detail.service';
 
 @Component({
   selector: 'app-transaction-detail',
-  templateUrl: './transaction-detail.component.html',
-  styleUrls: ['./transaction-detail.component.css']
+  template: `
+<div class="bg-warning bg-opacity-25 text-center m-5 p-4 d-flex justify-content-center">
+  <div>
+    <h2>Transaction {{ transactionDetail.id }} Detail</h2>
+    <div>Type: {{ transactionDetail.type }}</div>
+    <div>Object: {{ transactionDetail.object }}</div>
+    <div>Amount: {{ transactionDetail.amount }}</div>
+    <div>Total Price: {{ transactionDetail.total }} €</div>
+    <div>Date: {{ transactionDetail.date }}</div>
+  </div>
+</div>
+  `,
 })
 export class TransactionDetailComponent implements OnInit {
   transactionDetail: any;
@@ -15,16 +25,13 @@ export class TransactionDetailComponent implements OnInit {
     private transactionDetailService: TransactionDetailService
   ) {}
 
-  ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const id = idParam ? +idParam : null;
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
 
-    if (id !== null) {
+    if (id) {
       this.transactionDetailService.getTransactionDetail(id).subscribe((data) => {
         this.transactionDetail = data;
       });
-    } else {
-      console.error('Invalid or missing transaction ID');
     }
   }
 }
